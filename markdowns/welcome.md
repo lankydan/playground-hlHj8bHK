@@ -115,7 +115,7 @@ add(linkTo(methodOn(GymMembershipController.class).all(id)).withRel("memberships
 
 Now we have a better understanding of what a resource is we can look at the actual code inside the controller methods, hopefully I have chosen the correct response codes otherwise I am sure someone will try and correct me... I will then go on to explain two of them in more depth as same concept runs through them all.
 
-@[PersonController]({"stubs": ["src/main/java/com/lankydan/PersonController.java"],"command": "com.lankydan.rest.person.PersonControllerTest#getReturnsCorrectResponse"})
+@[PersonController]({"stubs": ["src/main/java/com/lankydan/rest/person/PersonController.java"],"command": "com.lankydan.rest.person.PersonControllerTest#getReturnsCorrectResponse"})
 
 ```java
 @RestController
