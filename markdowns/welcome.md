@@ -79,9 +79,6 @@ HATEOAS serivce
     "salary": 0
   },
   "_links": {
-    "person-id": {
-      "href": "1"
-    },
     "people": {
       "href": "http://localhost:8090/people"
     },
@@ -94,7 +91,7 @@ HATEOAS serivce
   }
 }
 ```
-As you can see there is a lot more going on in the HATEOAS response due to all the links that have been included. The URIs that are included in this example might not be the most useful, but should hopefully demonstrate the idea well enough. From the original request that was made you have links showing where to retrieve all people and all the memberships for this person, as well as some information about the request from the `person-id` and the `self` link pointing back to the request that was just made. Now that we have a better idea of what the resource object is we can have a look at how `PersonResource` is implemented.
+As you can see there is a lot more going on in the HATEOAS response due to all the links that have been included. The URIs that are included in this example might not be the most useful, but should hopefully demonstrate the idea well enough. From the original request that was made you have links showing where to retrieve all people and all the memberships for this person and finally the `self` link pointing back to the request that was just made. Now that we have a better idea of what the resource object is we can have a look at how `PersonResource` is implemented.
 ```java
 @Getter
 public class PersonResource extends ResourceSupport {
@@ -104,7 +101,6 @@ public class PersonResource extends ResourceSupport {
   public PersonResource(final Person person) {
     this.person = person;
     final long id = person.getId();
-    add(new Link(String.valueOf(id), "person-id"));
     add(linkTo(PersonController.class).withRel("people"));
     add(linkTo(methodOn(GymMembershipController.class).all(id)).withRel("memberships"));
     add(linkTo(methodOn(PersonController.class).get(id)).withSelfRel());
@@ -118,6 +114,9 @@ add(linkTo(methodOn(GymMembershipController.class).all(id)).withRel("memberships
 `add` is a method inherited from `ResourceSupport` which adds the link passed to it. `linkTo` creates the link and `methodOn` gets the URI for the `GymMembershipController.all` method (`people/{id}/memberships`), both of these methods are static methods from `ControlLinkBuilder`. The `id` has been passed into the `all` method allowing the `{id}` in the URI to be replaced by the input value. Once the link is created `withRel` is called to provide a name to the to describe how it is related to the resource. The other lines go about creating links in slightly different ways, one manually creates a new `Link` object and another uses `withSelfRel` which simply names the relation as "self".  
 
 Now we have a better understanding of what a resource is we can look at the actual code inside the controller methods, hopefully I have chosen the correct response codes otherwise I am sure someone will try and correct me... I will then go on to explain two of them in more depth as same concept runs through them all.
+
+@[PersonController]({"stubs": ["src/main/java/com/lankydan/PersonController.java"],"command": "com.lankydan.rest.person.PersonControllerTest#getReturnsCorrectResponse"})
+
 ```java
 @RestController
 @RequestMapping(value = "/people", produces = "application/hal+json")
@@ -214,9 +213,6 @@ CURL localhost:8090/people
           "salary": 0
         },
         "_links": {
-          "person-id": {
-            "href": "1"
-          },
           "people": {
             "href": "http://localhost:8090/people"
           },
@@ -272,9 +268,6 @@ CURL -X POST localhost:8090/people
     "salary": 0
   },
   "_links": {
-    "person-id": {
-      "href": "2"
-    },
     "people": {
       "href": "http://localhost:8090/people"
     },
