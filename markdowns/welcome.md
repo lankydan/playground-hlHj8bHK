@@ -114,9 +114,6 @@ add(linkTo(methodOn(GymMembershipController.class).all(id)).withRel("memberships
 `add` is a method inherited from `ResourceSupport` which adds the link passed to it. `linkTo` creates the link and `methodOn` gets the URI for the `GymMembershipController.all` method (`people/{id}/memberships`), both of these methods are static methods from `ControlLinkBuilder`. The `id` has been passed into the `all` method allowing the `{id}` in the URI to be replaced by the input value. Once the link is created `withRel` is called to provide a name to the to describe how it is related to the resource. The other lines go about creating links in slightly different ways, one manually creates a new `Link` object and another uses `withSelfRel` which simply names the relation as "self".  
 
 Now we have a better understanding of what a resource is we can look at the actual code inside the controller methods, hopefully I have chosen the correct response codes otherwise I am sure someone will try and correct me... I will then go on to explain two of them in more depth as same concept runs through them all.
-
-@[PersonController]({"stubs": ["src/main/java/com/lankydan/rest/person/PersonController.java"],"command": "com.lankydan.rest.person.PersonControllerTest#getReturnsCorrectResponse"})
-
 ```java
 @RestController
 @RequestMapping(value = "/people", produces = "application/hal+json")
