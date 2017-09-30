@@ -1,4 +1,4 @@
-title: Spring 5 Project
+title: Applying HATEOAS to a REST API with Spring Boot
 plan:
 - title: Welcome
   statement: markdowns/welcome.md
