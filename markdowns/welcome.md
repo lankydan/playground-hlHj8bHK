@@ -269,10 +269,10 @@ CURL -X POST localhost:8090/people
       "href": "http://localhost:8090/people"
     },
     "memberships": {
-      "href": "http://localhost:8090/people/14/memberships"
+      "href": "http://localhost:8090/people/2/memberships"
     },
     "self": {
-      "href": "http://localhost:8090/people/14"
+      "href": "http://localhost:8090/people/2"
     }
   }
 }
